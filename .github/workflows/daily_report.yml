@@ -1,0 +1,32 @@
+name: 📊 Daily Report Scheduler
+
+on:
+  schedule:
+    - cron: "0 1 * * *"   # Chạy hàng ngày lúc 01:00 UTC = 08:00 sáng VN
+  workflow_dispatch:       # Cho phép chạy thủ công từ GitHub UI
+
+jobs:
+  daily-report:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🔄 Checkout repository
+        uses: actions/checkout@v3
+
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: 📦 Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: 📈 Run report script
+        env:
+          MONGO_URI: ${{ secrets.MONGO_URI }}
+          SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
+          ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+          FROM_EMAIL: ${{ secrets.FROM_EMAIL }}
+        run: python script.py
