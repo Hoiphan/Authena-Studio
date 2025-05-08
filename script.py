@@ -95,9 +95,8 @@ with open("report.png", "rb") as f:
     data = f.read()
     encoded = base64.b64encode(data).decode()
 
-now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+now = (datetime.utcnow() + timedelta(hours=7)).strftime("%Y-%m-%d %H:%M:%S")
 
 message = Mail(
     from_email=os.getenv('FROM_EMAIL'),
