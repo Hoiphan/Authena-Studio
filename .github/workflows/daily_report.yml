@@ -2,7 +2,7 @@ name: 📊 Daily Report Scheduler
 
 on:
   schedule:
-    - cron: "35 5 * * *"   # Chạy hàng ngày lúc 01:00 UTC = 08:00 sáng VN
+    - cron: "50 5 * * *"   # Chạy hàng ngày lúc 01:00 UTC = 08:00 sáng VN
   workflow_dispatch:       # Cho phép chạy thủ công từ GitHub UI
 
 jobs:
