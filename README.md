@@ -1,42 +1,38 @@
-📊 Daily Report Scheduler
-This GitHub Action automates the generation and distribution of a daily report using Python. It runs every day at 08:00 AM (Vietnam time) and can also be triggered manually via the GitHub UI.
+# 📊 Daily Report Scheduler
 
-🧩 Features
-⏰ Scheduled to run daily using cron (01:00 UTC)
+This GitHub Action automates the generation and delivery of a daily report using Python. It runs every day at **08:00 AM (Vietnam time)** and can also be triggered manually from the GitHub Actions UI.
 
-🐍 Runs a custom Python script to fetch data, generate reports, and send email notifications
+## 🔧 How It Works
 
-🔒 Uses GitHub Secrets to securely handle credentials (MongoDB, SendGrid, etc.)
+The workflow performs the following steps:
 
-💌 Sends reports via email using SendGrid
+1. 🔄 Check out the repository
+2. 🐍 Set up Python 3.10
+3. 📦 Install dependencies from `requirements.txt`
+4. 📈 Run `script.py` with necessary environment variables
 
-🚀 How It Works
-Checkout the repository
+## 🔐 GitHub Secrets
 
-Set up Python (version 3.10)
+To run successfully, the workflow uses the following GitHub Secrets:
 
-Install dependencies from requirements.txt
+| Secret Name        | Description                         |
+|--------------------|-------------------------------------|
+| `MONGO_URI`        | MongoDB connection string           |
+| `SENDGRID_API_KEY` | API key for SendGrid                |
+| `ADMIN_EMAIL`      | Recipient email address             |
+| `FROM_EMAIL`       | Verified sender email address       |
 
-Run the main script (script.py) with environment variables
+## 🗓️ Schedule
 
-🛠️ Configuration
-To use this workflow, make sure to set the following GitHub Secrets:
+- Runs automatically every day at `01:00 UTC` (08:00 AM Vietnam time)
+- Can also be triggered manually via GitHub UI
 
-Secret Name	Description
-MONGO_URI	MongoDB connection string
-SENDGRID_API_KEY	API key for sending emails
-ADMIN_EMAIL	Recipient email address
-FROM_EMAIL	Sender email address (verified)
+## 📁 File Structure
 
-📅 Schedule
-This workflow is triggered automatically every day at:
+- `script.py` – Main script to generate and send the report
+- `requirements.txt` – List of Python dependencies
+- `.github/workflows/daily-report.yml` – GitHub Actions workflow file
 
-01:00 UTC
+## 🪪 License
 
-08:00 AM (Vietnam Time)
-
-Or you can trigger it manually from the GitHub Actions UI.
-
-📄 License
 This project is licensed under the MIT License.
-
