@@ -17,27 +17,23 @@ client = MongoClient(os.getenv("MONGO_URI"))
 db = client["task_logger"]
 collection = db["task_logs"]
 
-# Lấy dữ liệu ngày hôm qua
+# Tính thời gian bắt đầu hôm qua và kết thúc hôm nay (UTC)
 today = datetime.utcnow().date()
 yesterday = today - timedelta(days=1)
 
+start_time = datetime(yesterday.year, yesterday.month, yesterday.day)   # 00:00 hôm qua
+end_time = datetime(today.year, today.month, today.day) + timedelta(days=1)  # 00:00 ngày mai
+
 logs = list(collection.find({
     "timestamp": {
-        "$gte": datetime(yesterday.year, yesterday.month, yesterday.day),
-        "$lt": datetime(today.year, today.month, today.day)
+        "$gte": start_time,
+        "$lt": end_time
     }
 }))
-
-
 
 # Giả sử df chứa dữ liệu từ MongoDB
 df = pd.DataFrame(logs)
 
-# Xác nhận có cột timestamp
-if "timestamp" not in df.columns:
-    print("❌ Lỗi: không tìm thấy cột 'timestamp' trong dữ liệu MongoDB.")
-    print("Các cột hiện có:", df.columns)
-    exit(1)
 
 df["timestamp"] = pd.to_datetime(df["timestamp"])
 df["hour"] = df["timestamp"].dt.hour
