@@ -29,10 +29,20 @@ logs = list(collection.find({
 }))
 
 
+
 # Giả sử df chứa dữ liệu từ MongoDB
 df = pd.DataFrame(logs)
+
+# Xác nhận có cột timestamp
+if "timestamp" not in df.columns:
+    print("❌ Lỗi: không tìm thấy cột 'timestamp' trong dữ liệu MongoDB.")
+    print("Các cột hiện có:", df.columns)
+    exit(1)
+
 df["timestamp"] = pd.to_datetime(df["timestamp"])
 df["hour"] = df["timestamp"].dt.hour
+
+
 
 # 1. Tính toán
 success = df[df["status"] == "success"].shape[0]
